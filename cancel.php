@@ -33,6 +33,7 @@ $id = required_param('id', PARAM_INT);
 $key = required_param('key', PARAM_ALPHANUM);
 
 require_login(null, false);
+$PAGE->set_context(context_system::instance());
 
 $row = checkout::returning($id, $key);
 if ($row === null) {

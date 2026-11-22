@@ -404,7 +404,7 @@ class checkout {
             'description' => self::fit($row->description !== '' ? $row->description : $row->component, 250),
             'details' => self::fit(get_string('detailsat', 'paygw_orboni', (object) [
                 'number' => $row->id,
-                'site' => format_string($SITE->fullname, true, ['escape' => false]),
+                'site' => format_string($SITE->fullname, true, ['escape' => false, 'context' => \context_system::instance()]),
             ]), 500),
             'client_reference_id' => (string) $row->id,
             'customer_email' => validate_email($email) ? $email : null,

@@ -7,9 +7,13 @@ A Moodle payment gateway for crypto payments through [Orboni](https://orboni.com
 - Prices in USD, EUR, GBP and 34 other currencies. Orboni turns them into coins at the rate of the day.
 - A purchase is delivered (the learner enrolled) once the payment is final. That happens on a signed webhook, when the learner comes back to your site, or when Moodle's scheduled task runs, whichever comes first.
 
+## What it needs
+
+Orboni is an external service: the plugin shows nothing to pay with until a payment account has an Orboni secret key. Opening an Orboni account is free, and test payments (a `sk_test_` key) cost nothing. On live payments Orboni takes 0.5% of each completed payment, invoiced once a month, as a card processor takes its fee; there is no subscription, no setup fee and nothing to buy in the plugin itself. The plugin is free, under the GPL. Current pricing: [orboni.com/pricing](https://orboni.com/pricing).
+
 ## Install
 
-1. Download `paygw_orboni.zip` from the [latest release](https://github.com/orboni/moodle-payment/releases/latest), or install it from the Moodle plugins directory.
+1. Download `paygw_orboni.zip` from the [latest release](https://github.com/orboni/moodle-paygw_orboni/releases/latest), or install it from the Moodle plugins directory.
 2. In Moodle, go to **Site administration → Plugins → Install plugins** and upload it. You can also unzip it into `payment/gateway/orboni` (`public/payment/gateway/orboni` on Moodle 5.1 and later) and visit **Site administration → Notifications**. Moodle switches the gateway on in **Site administration → Plugins → Payment gateways → Manage payment gateways**.
 3. In **Site administration → General → Payments → Payment accounts**, open a payment account (or create one), and press **Orboni** in its payment gateways column.
 4. Paste your **Secret key** from the Orboni dashboard (Developers → API keys). Use `sk_test_…` to try it out and `sk_live_…` for real payments.

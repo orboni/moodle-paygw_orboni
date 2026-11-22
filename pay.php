@@ -30,6 +30,8 @@ $itemid = required_param('itemid', PARAM_INT);
 $description = optional_param('description', '', PARAM_TEXT);
 
 require_login(null, false);
+$PAGE->set_context(context_system::instance());
+$PAGE->set_url(new moodle_url('/payment/gateway/orboni/pay.php'));
 if (isguestuser()) {
     redirect(get_login_url());
 }
@@ -46,8 +48,6 @@ try {
     $back = new moodle_url('/');
 }
 
-$PAGE->set_context(context_system::instance());
-$PAGE->set_url(new moodle_url('/payment/gateway/orboni/pay.php'));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('gatewayname', 'paygw_orboni'));
 $PAGE->set_heading(get_string('gatewayname', 'paygw_orboni'));

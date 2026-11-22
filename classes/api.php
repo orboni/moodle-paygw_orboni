@@ -28,7 +28,7 @@ namespace paygw_orboni;
  */
 class api {
     /** @var string The plugin's version, sent in the User-Agent. */
-    public const VERSION = '1.0.1';
+    public const VERSION = '1.0.2';
 
     /** @var string The shape of a checkout session id. */
     public const SESSION_ID = '/^cs_(live|test)_[A-Za-z0-9]+$/';

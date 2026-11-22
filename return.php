@@ -32,6 +32,7 @@ $id = required_param('id', PARAM_INT);
 $key = required_param('key', PARAM_ALPHANUM);
 
 require_login(null, false);
+$PAGE->set_context(context_system::instance());
 
 $row = checkout::returning($id, $key);
 if ($row === null) {
@@ -46,7 +47,6 @@ if ($standing === 'paid') {
 }
 
 $url = checkout::return_url($row, 'return');
-$PAGE->set_context(context_system::instance());
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('returnheading', 'paygw_orboni'));
