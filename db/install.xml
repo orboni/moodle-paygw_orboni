@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="payment/gateway/orboni/db" VERSION="20261122" COMMENT="XMLDB file for the Orboni payment gateway"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="paygw_orboni" COMMENT="One purchase paid through Orboni: what is bought, by whom, its checkout sessions and what happened">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="accountid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The payment account whose Orboni settings it uses"/>
+        <FIELD NAME="component" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="paymentarea" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="itemid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" SEQUENCE="false"/>
+        <FIELD NAME="amount" TYPE="int" LENGTH="15" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The price asked, in the currency's smallest unit"/>
+        <FIELD NAME="currency" TYPE="char" LENGTH="3" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="pending" SEQUENCE="false" COMMENT="pending, paid, expired or canceled"/>
+        <FIELD NAME="token" TYPE="char" LENGTH="32" NOTNULL="true" SEQUENCE="false" COMMENT="Carried by the return addresses"/>
+        <FIELD NAME="sessionid" TYPE="char" LENGTH="64" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT="The current checkout session"/>
+        <FIELD NAME="sessionurl" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="sessions" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON: every checkout session made for it"/>
+        <FIELD NAME="attempt" TYPE="int" LENGTH="5" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="expiresat" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="checkedat" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="seen" TYPE="char" LENGTH="120" NOTNULL="true" DEFAULT="" SEQUENCE="false" COMMENT="session:status:payment_status last applied"/>
+        <FIELD NAME="events" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON: webhook event ids taken"/>
+        <FIELD NAME="paidsession" TYPE="char" LENGTH="64" NOTNULL="true" DEFAULT="" SEQUENCE="false"/>
+        <FIELD NAME="paymentid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Moodle's payment record once paid"/>
+        <FIELD NAME="history" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON: [time, line] of what happened"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="accountid" TYPE="foreign" FIELDS="accountid" REFTABLE="payment_accounts" REFFIELDS="id"/>
+        <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="paymentid" TYPE="foreign" FIELDS="paymentid" REFTABLE="payments" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="item" UNIQUE="false" FIELDS="userid, component, paymentarea, itemid"/>
+        <INDEX NAME="status" UNIQUE="false" FIELDS="status, checkedat"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>
